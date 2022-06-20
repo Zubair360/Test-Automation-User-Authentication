@@ -1,0 +1,51 @@
+/// <reference types="cypress" />
+
+
+
+
+it('DPE Login Test for Inactive User', function () {
+
+    cy.visit('https://login.ipemis.qa.innovatorslab.net/login')
+
+    var name = '01911296980'
+
+    var password = 'Maski1#111'
+
+    submitLoginForm(name,password)
+    
+
+
+    
+    errorMsgCheck('আপনার দেয়া পাসওয়ার্ডটি সঠিক নয়।')
+   
+  
+
+    cy.get('.lever').click()
+
+    submitLoginForm(name,password)
+
+    errorMsgCheck('The password you entered is incorrect.')
+   
+
+
+})
+
+
+
+function submitLoginForm (name,password){
+
+
+    cy.get('#username').type(name)
+
+    cy.get('#password').type(password)
+
+    cy.get('#login-submit').click()
+
+}
+
+function errorMsgCheck(msg){
+
+    cy.get('#login-form > div.alert.alert-danger > span').should("have.text",msg)
+
+}
+
